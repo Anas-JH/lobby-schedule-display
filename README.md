@@ -64,6 +64,7 @@ To get this project up and running locally, follow these steps:
 ```bash
 git clone https://github.com/Anas-JH/lobby-schedule-display.git
 cd lobby-schedule-display
+```
 
 **2. Backend Setup:**
 ```bash
