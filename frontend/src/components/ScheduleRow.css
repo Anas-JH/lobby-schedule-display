@@ -1,0 +1,93 @@
+/* frontend/src/components/ScheduleRow.css */
+.schedule-row {
+    display: grid;
+    /* Match the header grid */
+    grid-template-columns: 1fr 2fr 1.5fr 1fr 1fr;
+    gap: 15px;
+    padding: 12px 10px;
+    /* Padding within each row */
+    background-color: #374151;
+    /* Row background */
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 0.95rem;
+    /* Slightly larger text for rows */
+    line-height: 1.4;
+}
+
+.schedule-row:hover {
+    background-color: #4b5563;
+    /* Slightly lighter on hover */
+}
+
+.schedule-row div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* Keep content on one line, truncate if needed */
+    align-self: center;
+    /* Vertically align content in the middle of the cell */
+}
+
+.schedule-row .time-cell {
+    font-weight: 600;
+    font-size: 1.2rem;
+    /* Larger time */
+    color: #93c5fd;
+    /* Light blue for time */
+}
+
+.schedule-row .appointment-title-cell .client-name {
+    display: block;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    /* Dimmer color for client name */
+    margin-top: 2px;
+}
+
+.schedule-row .status-cell {
+    text-align: right;
+    font-weight: 600;
+}
+
+/* Status specific colors - you can expand these based on your status codes */
+.status-scheduled {
+    color: #facc15;
+}
+
+/* Yellow */
+.status-confirmed {
+    color: #a3e635;
+}
+
+/* Light Green */
+.status-arrived {
+    color: #60a5fa;
+}
+
+/* Blue */
+.status-inprogress {
+    color: #38bdf8;
+}
+
+/* Cyan */
+.status-completed {
+    color: #4ade80;
+}
+
+/* Green */
+.status-delayed {
+    color: #fb923c;
+}
+
+/* Orange */
+.status-cancelled {
+    color: #f87171;
+}
+
+/* Red */
+.status-noshow {
+    color: #94a3b8;
+}
+
+/* Slate */

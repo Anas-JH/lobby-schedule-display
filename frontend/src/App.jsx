@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import appointmentService from './services/appointmentService';
-import './App.css';
+import ScheduleBoard from './components/ScheduleBoard';
+import './App.css'; // Import main App styles
 
 function App() {
   const [appointments, setAppointments] = useState([]);
@@ -18,12 +19,13 @@ function App() {
 
     appointmentService.getAppointments(params)
       .then(response => {
-        setAppointments(response.data.results || response.data);
+        const results = response.data.results || response.data;
+        setAppointments(Array.isArray(results) ? results : []);
         setLoading(false);
       })
       .catch(err => {
         console.error("Failed to fetch appointments:", err);
-        setError('Failed to load appointments. Please ensure the backend server is running and accessible.');
+        setError('Failed to load appointments. Ensure the backend server is running and accessible.');
         setLoading(false);
       });
   };
@@ -31,51 +33,50 @@ function App() {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setFilterDate(today);
-    fetchAppointments(today);
+    // Initial fetch is handled by the second useEffect due to filterDate change
   }, []);
+
+  useEffect(() => {
+    if (filterDate) { // Fetch when filterDate is set/changed
+      fetchAppointments(filterDate);
+    }
+    // Setup auto-refresh interval
+    const intervalId = setInterval(() => {
+      if (filterDate) { // Only refresh if filterDate is set
+        fetchAppointments(filterDate);
+      }
+    }, 60000); // Fetch every 60 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount or when filterDate changes
+  }, [filterDate]); // Re-run when filterDate changes
 
   const handleDateChange = (event) => {
     setFilterDate(event.target.value);
   };
 
-  const handleFilterSubmit = (event) => {
-    event.preventDefault();
-    fetchAppointments(filterDate);
-  };
-
-  if (loading) return <p>Loading appointments...</p>;
-  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
-
   return (
     <div className="App">
-      <h1>Lobby Schedule Display</h1>
-      
-      <form onSubmit={handleFilterSubmit}>
-        <label htmlFor="appointmentDate">Filter by Date: </label>
-        <input 
-          type="date" 
-          id="appointmentDate" 
-          value={filterDate} 
-          onChange={handleDateChange} 
-        />
-        <button type="submit">Filter</button>
-      </form>
+      <header className="App-header">
+        <h1>Lobby Schedule Display</h1>
+      </header>
 
-      <h2>Appointments {filterDate ? `for ${filterDate}` : ''}</h2>
-      {appointments.length === 0 ? (
-        <p>No appointments found {filterDate ? `for ${filterDate}` : '.'}</p>
-      ) : (
-        <ul>
-          {appointments.map(app => (
-            <li key={app.id}>
-              <strong>{app.title}</strong> - {app.client_name} ({app.provider_name})
-              <br />
-              When: {new Date(app.appointment_datetime).toLocaleString()}
-              <br />
-              Room/Location: {app.room_location || 'N/A'} | Status: {app.status}
-            </li>
-          ))}
-        </ul>
+      <div className="filter-form-container">
+        <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
+          <label htmlFor="appointmentDate">Filter by Date: </label>
+          <input
+            type="date"
+            id="appointmentDate"
+            value={filterDate}
+            onChange={handleDateChange}
+          />
+        </form>
+      </div>
+
+      {loading && <p className="loading-text">Loading appointments...</p>}
+      {error && <p className="error-text">Error: {error}</p>}
+
+      {!loading && !error && (
+        <ScheduleBoard appointments={appointments} />
       )}
     </div>
   );

@@ -1,0 +1,58 @@
+/* frontend/src/components/ScheduleBoard.css */
+.schedule-board-container {
+    max-width: 900px;
+    /* Adjust as needed */
+    margin: 0 auto;
+    /* Center the board */
+    background-color: #1f2937;
+    /* Slightly lighter than app background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    font-family: 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+    /* Monospaced for board feel */
+}
+
+.schedule-board-header {
+    display: grid;
+    /* 5 columns: Time(1fr) Appointment(2fr) Provider(1.5fr) Room(1fr) Status(1fr) */
+    grid-template-columns: 1fr 2fr 1.5fr 1fr 1fr;
+    gap: 15px;
+    /* Gap between columns */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #4b5563;
+    /* Separator line */
+    color: #9ca3af;
+    /* Header text color */
+    font-weight: 600;
+    /* Boldish */
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    /* Airport board style */
+}
+
+.schedule-board-header div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.schedule-board-header .status-header {
+    text-align: right;
+}
+
+.no-appointments-text {
+    text-align: center;
+    color: #6b7280;
+    /* Dimmed text */
+    margin-top: 30px;
+    font-size: 1.1rem;
+}
+
+.appointment-rows-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    /* Small gap between rows */
+}
