@@ -62,7 +62,7 @@ To get this project up and running locally, follow these steps:
 
 **1. Clone the Repository:**
 ```bash
-git clone <your_repository_url>
+git clone https://github.com/Anas-JH/lobby-schedule-display.git
 cd lobby-schedule-display
 
 **2. Backend Setup:**
