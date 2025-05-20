@@ -149,4 +149,3 @@ This project was a valuable learning experience, and like any development proces
 ---
 
 Thank you for checking out Lobby Schedule Display!
-```
